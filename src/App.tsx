@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Reorder } from "framer-motion";
 import Input from "./components/Input";
 import Todo from "./components/Todo";
 import { cn } from "./utils/cn";
@@ -64,7 +65,7 @@ export default function App() {
 
       <main className="absolute top-20 mx-auto flex min-h-full w-full flex-col items-center justify-center px-10 pb-10">
         <div className="w-full max-w-[600px]">
-          <div className="mb-8 flex w-full items-start justify-between text-center">
+          <div className="mb-6 flex w-full items-center justify-between text-center">
             <h1 className="text-[40px] font-bold uppercase text-white">
               T O D O
             </h1>
@@ -77,11 +78,18 @@ export default function App() {
             <Input setTodos={setTodos} />
 
             <div className="flex w-full flex-col items-center overflow-hidden rounded-md">
-              <div className="scrollbar flex w-full flex-col">
+              <Reorder.Group
+                values={filteredTodos}
+                onReorder={setTodos}
+                as="ul"
+                className="scrollbar flex w-full flex-col"
+              >
                 {filteredTodos.map((todo) => (
-                  <Todo key={todo.id} todo={todo} setTodos={setTodos} />
+                  <Reorder.Item key={todo.id} value={todo}>
+                    <Todo key={todo.id} todo={todo} setTodos={setTodos} />
+                  </Reorder.Item>
                 ))}
-              </div>
+              </Reorder.Group>
 
               <div className="border-b-rounded flex w-full items-center justify-between bg-veryDarkDesaturatedBlue px-6 py-4 text-sm text-veryDarkGrayishBlue">
                 <p className="">{countUncompletedTodos} items left</p>
@@ -126,6 +134,10 @@ export default function App() {
                 </button>
               </div>
             </div>
+          </div>
+
+          <div className="border-b-rounded mt-4 w-full text-center text-sm text-veryDarkGrayishBlue">
+            Drag and drop to reorder list
           </div>
         </div>
       </main>
