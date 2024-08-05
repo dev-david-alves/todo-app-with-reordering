@@ -1,30 +1,31 @@
-# React + TypeScript + Vite
+# A Todo App with reordering
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white) <br />
+Always improving my skills 🔥🚀.
 
-Currently, two official plugins are available:
+## What you can do with this project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Create a Todo
+- Mark a Todo as completed
+- Delete a Todo
+- Reorder a Todo by drag and drop
+- Filter by All, Active and Completed Todos
+- Clear all completed Todos
+- Change Theme (Light and Dark)
+- Fully responsive
 
-## Expanding the ESLint configuration
+### Desktop Dark Mode
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+<img src="/public/screenshots/desktop-dark.png" alt="Desktop Dark Mode" style="height: auto; width:600px;"/>
 
-- Configure the top-level `parserOptions` property like this:
+### Desktop Light Mode
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json", "./tsconfig.app.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
+<img src="/public/screenshots/desktop-light.png" alt="Desktop Light Mode" style="height: auto; width:600px;"/>
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Mobile Dark Mode
+
+<img src="/public/screenshots/mobile-dark.png" alt="Mobile Dark Mode" style="height: auto; width:400px;"/>
+
+### Mobile Light Mode
+
+<img src="/public/screenshots/mobile-light.png" alt="Mobile Light Mode" style="height: auto; width:400px;"/>
