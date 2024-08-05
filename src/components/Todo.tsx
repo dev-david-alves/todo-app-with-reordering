@@ -27,7 +27,7 @@ function Todo({
   };
 
   return (
-    <li className="flex w-full items-center justify-between border-b-[1px] border-veryDarkGrayishBlue bg-veryDarkDesaturatedBlue px-6 py-4">
+    <div className="flex w-full items-center justify-between border-b-[1px] border-veryDarkGrayishBlue bg-veryDarkDesaturatedBlue px-6 py-4">
       <div className="flex flex-1 items-center gap-6">
         <Checkbox
           checkboxSelected={completed}
@@ -35,8 +35,9 @@ function Todo({
         />
         <p
           className={cn(
-            "text-lightGrayishBlueDark hover:text-lightGrayishBlueHover",
-            completed && "text-veryDarkGrayishBlue line-through",
+            "text-veryLightGrayishBlue hover:text-veryLightGray",
+            completed &&
+              "text-veryDarkGrayishBlue line-through hover:text-veryDarkGrayishBlue",
           )}
         >
           {text}
@@ -49,7 +50,7 @@ function Todo({
       >
         <img src="./assets/icon-cross.svg" alt="Delete" />
       </button>
-    </li>
+    </div>
   );
 }
 

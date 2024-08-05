@@ -15,7 +15,7 @@ function Input({
       setTodos((prevTodos: TodoType[]) => [
         ...prevTodos,
         {
-          id: prevTodos.length + 1,
+          id: Math.floor(Math.random() * 1000) + 1,
           text: inputValue,
           completed: checkboxSelected,
         },
@@ -26,7 +26,7 @@ function Input({
   };
 
   return (
-    <div className="flex w-full items-center gap-6 rounded-md bg-veryDarkDesaturatedBlue px-6 py-4">
+    <div className="flex w-full items-center gap-6 rounded-md bg-veryDarkDesaturatedBlue px-6 py-4 drop-shadow-lg">
       <Checkbox
         checkboxSelected={checkboxSelected}
         setCheckboxSelected={setCheckboxSelected}
@@ -35,7 +35,7 @@ function Input({
         type="text"
         value={inputValue}
         placeholder="Create a new todo..."
-        className="foucs:outline-none border-none bg-veryDarkDesaturatedBlue text-darkGrayishBlue outline-none ring-0"
+        className="foucs:outline-none w-full border-none bg-veryDarkDesaturatedBlue text-veryLightGrayishBlue outline-none ring-0 placeholder:text-darkGrayishBlue"
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={(e) => handleSetTodos(e)}
       />

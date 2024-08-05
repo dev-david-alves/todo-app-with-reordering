@@ -13,7 +13,7 @@ function Checkbox({
   return (
     <button
       className={cn(
-        "flex h-6 w-6 items-center justify-center rounded-full border-[1px] border-veryDarkGrayishBlueDark transition-all hover:border-checkBackgroundLeft hover:border-opacity-50",
+        "flex h-6 min-h-6 w-6 min-w-6 items-center justify-center rounded-full border-[1px] border-veryDarkGrayishBlueDark transition-all hover:border-checkBackgroundLeft hover:border-opacity-50",
         checkboxSelected &&
           "bg-gradient-to-r from-checkBackgroundLeft to-checkBackgroundRight",
       )}

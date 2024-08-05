@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Reorder } from "framer-motion";
 import Input from "./components/Input";
 import Todo from "./components/Todo";
@@ -30,7 +30,7 @@ export default function App() {
     {
       id: 4,
       text: "Read for 1 hour",
-      completed: true,
+      completed: false,
     },
     {
       id: 5,
@@ -40,11 +40,12 @@ export default function App() {
     {
       id: 6,
       text: "Complete Todo App on Frontend Mentor",
-      completed: true,
+      completed: false,
     },
   ]);
 
-  const [filter, setFilter] = useState<string>("all");
+  const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   const filteredTodos = todos.filter((todo) => {
     if (filter === "all") return true;
@@ -53,50 +54,89 @@ export default function App() {
     return true;
   });
 
+  useEffect(() => {
+    let bodyHasTheme = document.body.classList.contains("dark");
+
+    if (theme === "dark" && !bodyHasTheme) {
+      document.body.classList.add("dark");
+      document.body.classList.remove("light");
+    } else if (theme === "light" && bodyHasTheme) {
+      document.body.classList.add("light");
+      document.body.classList.remove("dark");
+    }
+  }, [theme]);
+
   const countUncompletedTodos = todos.filter((todo) => !todo.completed).length;
 
   return (
-    <div className="relative min-h-full font-josefinSans text-body font-normal">
+    <div className="relative h-full min-h-full w-full bg-veryDarkDesaturatedBlue font-josefinSans text-body font-normal">
+      {/* Bg images for mobile */}
       <img
-        src="./assets/bg-desktop-dark.jpg"
-        className="min-h-full min-w-full object-cover"
-        alt="Dark background"
+        src={
+          theme === "light"
+            ? "./assets/bg-mobile-light.jpg"
+            : "./assets/bg-mobile-dark.jpg"
+        }
+        className="min-h-full min-w-full md:hidden"
+        alt="Background image"
       />
 
-      <main className="absolute top-20 mx-auto flex min-h-full w-full flex-col items-center justify-center px-10 pb-10">
+      {/* Bg images for desktop */}
+      <img
+        src={
+          theme === "light"
+            ? "./assets/bg-desktop-light.jpg"
+            : "./assets/bg-desktop-dark.jpg"
+        }
+        className="hidden min-h-full min-w-full md:block"
+        alt="Background image"
+      />
+
+      <main className="absolute top-10 mx-auto flex min-h-full w-full flex-col items-center justify-center px-5 pb-10 md:top-20">
         <div className="w-full max-w-[600px]">
           <div className="mb-6 flex w-full items-center justify-between text-center">
-            <h1 className="text-[40px] font-bold uppercase text-white">
+            <h1 className="text-[40px] font-bold uppercase text-[#ffffff]">
               T O D O
             </h1>
-            <button className="h-full">
-              <img src="./assets/icon-sun.svg" alt="Sun icon" />
+            <button
+              className="h-full"
+              onClick={() => {
+                setTheme(theme === "light" ? "dark" : "light");
+              }}
+            >
+              {theme === "light" ? (
+                <img src="./assets/icon-moon.svg" alt="Moon icon" />
+              ) : (
+                <img src="./assets/icon-sun.svg" alt="Sun icon" />
+              )}
             </button>
           </div>
 
           <div className="flex w-full flex-col items-center gap-4">
             <Input setTodos={setTodos} />
 
-            <div className="flex w-full flex-col items-center overflow-hidden rounded-md">
+            <div className="flex w-full flex-col items-center overflow-hidden rounded-md drop-shadow-lg">
               <Reorder.Group
                 values={filteredTodos}
                 onReorder={setTodos}
                 as="ul"
-                className="scrollbar flex w-full flex-col"
+                className="scrollbar flex w-full cursor-grab flex-col"
               >
-                {filteredTodos.map((todo) => (
-                  <Reorder.Item key={todo.id} value={todo}>
-                    <Todo key={todo.id} todo={todo} setTodos={setTodos} />
+                {filteredTodos.map((todo, index) => (
+                  <Reorder.Item key={index} value={todo}>
+                    <Todo todo={todo} setTodos={setTodos} />
                   </Reorder.Item>
                 ))}
               </Reorder.Group>
 
               <div className="border-b-rounded flex w-full items-center justify-between bg-veryDarkDesaturatedBlue px-6 py-4 text-sm text-veryDarkGrayishBlue">
-                <p className="">{countUncompletedTodos} items left</p>
+                <p className="font-medium">
+                  {countUncompletedTodos} items left
+                </p>
                 <div className="flex items-center gap-6 font-bold">
                   <button
                     className={cn(
-                      "transition-all duration-100 hover:text-white",
+                      "transition-all duration-100 hover:text-veryLightGray",
                       filter === "all" && "text-brightBlue",
                     )}
                     onClick={() => setFilter("all")}
@@ -105,7 +145,7 @@ export default function App() {
                   </button>
                   <button
                     className={cn(
-                      "transition-all duration-100 hover:text-white",
+                      "transition-all duration-100 hover:text-veryLightGray",
                       filter === "active" && "text-brightBlue",
                     )}
                     onClick={() => setFilter("active")}
@@ -114,7 +154,7 @@ export default function App() {
                   </button>
                   <button
                     className={cn(
-                      "transition-all duration-100 hover:text-white",
+                      "transition-all duration-100 hover:text-veryLightGray",
                       filter === "completed" && "text-brightBlue",
                     )}
                     onClick={() => setFilter("completed")}
@@ -123,7 +163,7 @@ export default function App() {
                   </button>
                 </div>
                 <button
-                  className="transition-all duration-100 hover:text-white"
+                  className="font-medium transition-all duration-100 hover:text-veryLightGray"
                   onClick={() =>
                     setTodos((prevTodos) =>
                       prevTodos.filter((todo) => !todo.completed),
