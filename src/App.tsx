@@ -122,8 +122,8 @@ export default function App() {
                 as="ul"
                 className="scrollbar flex w-full cursor-grab flex-col"
               >
-                {filteredTodos.map((todo, index) => (
-                  <Reorder.Item key={index} value={todo}>
+                {filteredTodos.map((todo) => (
+                  <Reorder.Item key={todo.id} value={todo}>
                     <Todo todo={todo} setTodos={setTodos} />
                   </Reorder.Item>
                 ))}
