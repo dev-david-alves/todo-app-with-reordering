@@ -74,8 +74,8 @@ export default function App() {
       <img
         src={
           theme === "light"
-            ? "./assets/bg-mobile-light.jpg"
-            : "./assets/bg-mobile-dark.jpg"
+            ? "assets/bg-mobile-light.jpg"
+            : "assets/bg-mobile-dark.jpg"
         }
         className="min-h-full min-w-full md:hidden"
         alt="Background image"
@@ -85,8 +85,8 @@ export default function App() {
       <img
         src={
           theme === "light"
-            ? "./assets/bg-desktop-light.jpg"
-            : "./assets/bg-desktop-dark.jpg"
+            ? "assets/bg-desktop-light.jpg"
+            : "assets/bg-desktop-dark.jpg"
         }
         className="hidden min-h-full min-w-full md:block"
         alt="Background image"
@@ -105,9 +105,9 @@ export default function App() {
               }}
             >
               {theme === "light" ? (
-                <img src="./assets/icon-moon.svg" alt="Moon icon" />
+                <img src="assets/icon-moon.svg" alt="Moon icon" />
               ) : (
-                <img src="./assets/icon-sun.svg" alt="Sun icon" />
+                <img src="assets/icon-sun.svg" alt="Sun icon" />
               )}
             </button>
           </div>

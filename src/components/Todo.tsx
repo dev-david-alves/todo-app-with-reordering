@@ -48,7 +48,7 @@ function Todo({
         className="hover:text-lightGrayishBlueDark focus:outline-none"
         onClick={() => handleRemoveTodo(id)}
       >
-        <img src="./assets/icon-cross.svg" alt="Delete" />
+        <img src="assets/icon-cross.svg" alt="Delete" />
       </button>
     </div>
   );
