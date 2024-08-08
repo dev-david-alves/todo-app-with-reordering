@@ -14,6 +14,8 @@ Always improving my skills 🔥🚀.
 - Change Theme (Light and Dark)
 - Fully responsive
 
+You can access the hosted version of this website [here](https://dev-david-alves.github.io/A-Todo-App-with-reordering/). Let me know if everything works out well for you!
+
 ### Desktop Dark Mode
 
 <img src="/public/screenshots/desktop-dark.png" alt="Desktop Dark Mode" style="height: auto; width:600px;"/>
