@@ -1,7 +1,7 @@
-import Checkbox from "./Checkbox";
-
-import { TodoType } from "../App";
-import { cn } from "../utils/cn";
+import { TodoType } from "@/App";
+import { cn } from "@/utils/cn";
+import Checkbox from "@/components/Checkbox";
+import IconCross from "@/assets/icon-cross.svg";
 
 function Todo({
   todo,
@@ -45,10 +45,10 @@ function Todo({
       </div>
 
       <button
-        className="text-lightGrayishBlueDark invisible transition-all duration-100 focus:outline-none group-hover/todo:visible"
+        className="text-lightGrayishBlueDark invisible transition-all duration-100 focus:outline-none group-hover/todo:visible p-2"
         onClick={() => handleRemoveTodo(id)}
       >
-        <img src="assets/icon-cross.svg" alt="Delete" />
+        <img src={IconCross} alt="Delete" />
       </button>
     </div>
   );

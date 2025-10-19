@@ -1,5 +1,6 @@
 import React from "react";
-import { cn } from "../utils/cn";
+import { cn } from "@/utils/cn";
+import IconCheck from "@/assets/icon-check.svg";
 
 function Checkbox({
   checkboxSelected,
@@ -19,7 +20,7 @@ function Checkbox({
       )}
       onClick={() => setCheckboxSelected(!checkboxSelected)}
     >
-      {checkboxSelected && <img src="./assets/icon-check.svg" alt="Check" />}
+      {checkboxSelected && <img src={IconCheck} alt="Check" />}
     </button>
   );
 }

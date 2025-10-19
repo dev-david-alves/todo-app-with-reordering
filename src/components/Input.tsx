@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Checkbox from "./Checkbox";
-import { TodoType } from "../App";
+import Checkbox from "@/components/Checkbox";
+import { TodoType } from "@/App";
 
 function Input({
   setTodos,

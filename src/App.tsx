@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
 import { Reorder } from "framer-motion";
-import Input from "./components/Input";
-import Todo from "./components/Todo";
-import { cn } from "./utils/cn";
+import Input from "@/components/Input";
+import Todo from "@/components/Todo";
+import { cn } from "@/utils/cn";
+import BGMobileLight from "@/assets/bg-mobile-light.jpg";
+import BGMobileDark from "@/assets/bg-mobile-dark.jpg";
+import BGDesktopLight from "@/assets/bg-desktop-light.jpg";
+import BGDesktopDark from "@/assets/bg-desktop-dark.jpg";
+import SunIcon from "@/assets/icon-sun.svg";
+import MoonIcon from "@/assets/icon-moon.svg";
+
 
 export type TodoType = {
   id: number;
@@ -69,33 +76,11 @@ export default function App() {
   const countUncompletedTodos = todos.filter((todo) => !todo.completed).length;
 
   return (
-    <div className="relative h-full min-h-full w-full bg-veryDarkDesaturatedBlue font-josefinSans text-body font-normal">
-      {/* Bg images for mobile */}
-      <img
-        src={
-          theme === "light"
-            ? "assets/bg-mobile-light.jpg"
-            : "assets/bg-mobile-dark.jpg"
-        }
-        className="min-h-full min-w-full md:hidden"
-        alt="Background image"
-      />
-
-      {/* Bg images for desktop */}
-      <img
-        src={
-          theme === "light"
-            ? "assets/bg-desktop-light.jpg"
-            : "assets/bg-desktop-dark.jpg"
-        }
-        className="hidden min-h-full min-w-full md:block"
-        alt="Background image"
-      />
-
-      <main className="absolute top-10 mx-auto flex min-h-full w-full flex-col items-center justify-center px-5 pb-10 md:top-20">
+    <div className="h-full min-h-screen flex items-center justify-center w-full font-josefinSans text-body font-normal">
+      <main className="flex min-h-full w-full flex-col items-center justify-center px-5 pb-10 md:top-20">
         <div className="w-full max-w-[600px]">
           <div className="mb-6 flex w-full items-center justify-between text-center">
-            <h1 className="text-[40px] font-bold uppercase text-[#ffffff]">
+            <h1 className="text-[40px] font-bold uppercase text-veryLightGrayishBlue">
               T O D O
             </h1>
             <button
@@ -105,9 +90,9 @@ export default function App() {
               }}
             >
               {theme === "light" ? (
-                <img src="assets/icon-moon.svg" alt="Moon icon" />
+                <img src={MoonIcon} alt="Moon icon" />
               ) : (
-                <img src="assets/icon-sun.svg" alt="Sun icon" />
+                <img src={SunIcon} alt="Sun icon" />
               )}
             </button>
           </div>

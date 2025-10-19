@@ -1,6 +1,6 @@
 {
-  "homepage": "https://dev-david-alves.github.io/A-Todo-App-with-reordering",
-  "name": "todo-app-with-drag-and-drop",
+  "homepage": "https://dev-david-alves.github.io/todo-app-with-reordering",
+  "name": "todo-app-with-reordering",
   "private": true,
   "version": "0.0.0",
   "type": "module",
