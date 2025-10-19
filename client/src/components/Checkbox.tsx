@@ -6,10 +6,10 @@ function Checkbox({
   checkboxSelected,
   setCheckboxSelected,
 }: {
-  checkboxSelected: boolean;
+  checkboxSelected: number;
   setCheckboxSelected:
-    | React.Dispatch<React.SetStateAction<boolean>>
-    | ((selected: boolean) => void);
+    | React.Dispatch<React.SetStateAction<number>>
+    | ((selected: number) => void);
 }) {
   return (
     <button
@@ -18,9 +18,9 @@ function Checkbox({
         checkboxSelected &&
           "bg-gradient-to-r from-checkBackgroundLeft to-checkBackgroundRight",
       )}
-      onClick={() => setCheckboxSelected(!checkboxSelected)}
+      onClick={() => setCheckboxSelected(checkboxSelected ? 0 : 1)}
     >
-      {checkboxSelected && <img src={IconCheck} alt="Check" />}
+      {checkboxSelected == 1 && <img src={IconCheck} alt="Check" />}
     </button>
   );
 }

@@ -3,53 +3,42 @@ import { Reorder } from "framer-motion";
 import Input from "@/components/Input";
 import Todo from "@/components/Todo";
 import { cn } from "@/utils/cn";
-import BGMobileLight from "@/assets/bg-mobile-light.jpg";
-import BGMobileDark from "@/assets/bg-mobile-dark.jpg";
-import BGDesktopLight from "@/assets/bg-desktop-light.jpg";
-import BGDesktopDark from "@/assets/bg-desktop-dark.jpg";
 import SunIcon from "@/assets/icon-sun.svg";
 import MoonIcon from "@/assets/icon-moon.svg";
-
+import axios from "axios";
 
 export type TodoType = {
   id: number;
-  text: string;
-  completed: boolean;
+  title: string;
+  completed: number;
 };
 
 export default function App() {
-  const [todos, setTodos] = useState<TodoType[]>([
-    {
-      id: 1,
-      text: "Complete online JavaScript course",
-      completed: true,
-    },
-    {
-      id: 2,
-      text: "Jog around the park 3x",
-      completed: false,
-    },
-    {
-      id: 3,
-      text: "10 minutes meditation",
-      completed: false,
-    },
-    {
-      id: 4,
-      text: "Read for 1 hour",
-      completed: false,
-    },
-    {
-      id: 5,
-      text: "Pick up groceries",
-      completed: false,
-    },
-    {
-      id: 6,
-      text: "Complete Todo App on Frontend Mentor",
-      completed: false,
-    },
-  ]);
+  const [todos, setTodos] = useState<TodoType[]>([]);
+
+  useEffect(() => {
+    const fetchTodos = async () => {
+      try {
+        const { data } = await axios.get<TodoType[]>(
+          "http://localhost:3001/todos",
+        );
+        setTodos(data);
+      } catch (error) {
+        alert("Error fetching todos!");
+      }
+    };
+
+    fetchTodos();
+  }, []);
+
+  const handleClearCompleted = async () => {
+    try {
+      await axios.delete("http://localhost:3001/todos");
+      setTodos((prevTodos) => prevTodos.filter((todo) => !todo.completed));
+    } catch (error) {
+      alert("Error clearing completed todos!");
+    }
+  };
 
   const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
   const [theme, setTheme] = useState<"light" | "dark">("dark");
@@ -76,7 +65,7 @@ export default function App() {
   const countUncompletedTodos = todos.filter((todo) => !todo.completed).length;
 
   return (
-    <div className="h-full min-h-screen flex items-center justify-center w-full font-josefinSans text-body font-normal">
+    <div className="flex h-full min-h-screen w-full items-center justify-center font-josefinSans text-body font-normal">
       <main className="flex min-h-full w-full flex-col items-center justify-center px-5 pb-10 md:top-20">
         <div className="w-full max-w-[600px]">
           <div className="mb-6 flex w-full items-center justify-between text-center">
@@ -149,11 +138,7 @@ export default function App() {
                 </div>
                 <button
                   className="font-medium transition-all duration-100 hover:text-veryLightGray"
-                  onClick={() =>
-                    setTodos((prevTodos) =>
-                      prevTodos.filter((todo) => !todo.completed),
-                    )
-                  }
+                  onClick={handleClearCompleted}
                 >
                   Clear Completed
                 </button>

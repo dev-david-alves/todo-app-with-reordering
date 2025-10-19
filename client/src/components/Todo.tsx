@@ -2,6 +2,7 @@ import { TodoType } from "@/App";
 import { cn } from "@/utils/cn";
 import Checkbox from "@/components/Checkbox";
 import IconCross from "@/assets/icon-cross.svg";
+import axios from "axios";
 
 function Todo({
   todo,
@@ -10,20 +11,33 @@ function Todo({
   todo: TodoType;
   setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
 }) {
-  const { id, text, completed } = todo;
+  const { id, title, completed } = todo;
 
-  const handleRemoveTodo = (id: number) => {
-    setTodos((prevTodos: TodoType[]) =>
-      prevTodos.filter((todo) => todo.id !== id),
-    );
+  const handleRemoveTodo = async (id: number) => {
+    try {
+      await axios.delete(`http://localhost:3001/todos/${id}`);
+      setTodos((prevTodos: TodoType[]) =>
+        prevTodos.filter((todo) => todo.id !== id),
+      );
+    } catch (error) {
+      alert("Error removing todo!");
+    }
   };
 
-  const setCheckboxSelected = (selected: boolean) => {
-    setTodos((prevTodos: TodoType[]) =>
-      prevTodos.map((todo) =>
-        todo.id === id ? { ...todo, completed: selected } : todo,
-      ),
-    );
+  const setCheckboxSelected = async (selected: number) => {
+    try {
+      await axios.put(`http://localhost:3001/todos/${id}`, {
+        completed: selected,
+      });
+
+      setTodos((prevTodos: TodoType[]) =>
+        prevTodos.map((todo) =>
+          todo.id === id ? { ...todo, completed: selected } : todo,
+        ),
+      );
+    } catch (error) {
+      alert("Error updating todo!");
+    }
   };
 
   return (
@@ -40,12 +54,12 @@ function Todo({
               "text-veryDarkGrayishBlue line-through hover:text-veryDarkGrayishBlue",
           )}
         >
-          {text}
+          {title}
         </p>
       </div>
 
       <button
-        className="text-lightGrayishBlueDark invisible transition-all duration-100 focus:outline-none group-hover/todo:visible p-2"
+        className="text-lightGrayishBlueDark invisible p-2 transition-all duration-100 focus:outline-none group-hover/todo:visible"
         onClick={() => handleRemoveTodo(id)}
       >
         <img src={IconCross} alt="Delete" />

@@ -1,27 +1,37 @@
 import { useState } from "react";
 import Checkbox from "@/components/Checkbox";
 import { TodoType } from "@/App";
+import axios from "axios";
 
 function Input({
   setTodos,
 }: {
   setTodos: React.Dispatch<React.SetStateAction<any>>;
 }) {
-  const [checkboxSelected, setCheckboxSelected] = useState(false);
+  const [checkboxSelected, setCheckboxSelected] = useState(0);
   const [inputValue, setInputValue] = useState("");
 
-  const handleSetTodos = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleSetTodos = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
-      setTodos((prevTodos: TodoType[]) => [
-        ...prevTodos,
-        {
-          id: Math.floor(Math.random() * 1000) + 1,
-          text: inputValue,
-          completed: checkboxSelected,
-        },
-      ]);
-      setInputValue("");
-      setCheckboxSelected(false);
+      try {
+        const { data } = await axios.post("http://localhost:3001/todos", {
+          title: inputValue,
+          completed: checkboxSelected ? 1 : 0,
+        });
+
+        setTodos((prevTodos: TodoType[]) => [
+          ...prevTodos,
+          {
+            id: data.id,
+            title: inputValue,
+            completed: checkboxSelected,
+          },
+        ]);
+        setInputValue("");
+        setCheckboxSelected(0);
+      } catch (error) {
+        alert("Error adding todo!");
+      }
     }
   };
 
