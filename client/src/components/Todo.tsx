@@ -1,71 +1,73 @@
-import { TodoType } from "@/App";
-import { cn } from "@/utils/cn";
+import { useState } from "react";
+import axios from "axios";
 import Checkbox from "@/components/Checkbox";
 import IconCross from "@/assets/icon-cross.svg";
-import axios from "axios";
+import { cn } from "@/utils/cn";
+import { TodoType } from "@/App";
 
 function Todo({
-  todo,
-  setTodos,
+    todo,
+    setTodos,
 }: {
-  todo: TodoType;
-  setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
+    todo: TodoType;
+    setTodos: React.Dispatch<React.SetStateAction<TodoType[]>>;
 }) {
-  const { id, title, completed } = todo;
+    const { id, title } = todo;
+    const [completed, setCompleted] = useState(todo.completed);
 
-  const handleRemoveTodo = async (id: number) => {
-    try {
-      await axios.delete(`http://localhost:3001/todos/${id}`);
-      setTodos((prevTodos: TodoType[]) =>
-        prevTodos.filter((todo) => todo.id !== id),
-      );
-    } catch (error) {
-      alert("Error removing todo!");
-    }
-  };
+    const handleDeleteTodo = async (id: number) => {
+        try {
+            await axios.delete(`http://localhost:3001/todos/${id}`);
+            setTodos((prevTodos) => prevTodos.filter((t) => t.id !== id));
+        } catch {
+            alert("Error removing todo!");
+        }
+    };
 
-  const setCheckboxSelected = async (selected: number) => {
-    try {
-      await axios.put(`http://localhost:3001/todos/${id}`, {
-        completed: selected,
-      });
+    const handleUpdateTodo = async (selected: number) => {
+        try {
+            setCompleted(selected);
+            await axios.put(`http://localhost:3001/todos/${id}`, {
+                completed: selected,
+            });
 
-      setTodos((prevTodos: TodoType[]) =>
-        prevTodos.map((todo) =>
-          todo.id === id ? { ...todo, completed: selected } : todo,
-        ),
-      );
-    } catch (error) {
-      alert("Error updating todo!");
-    }
-  };
+            setTodos((prevTodos) =>
+                prevTodos.map((t) =>
+                    t.id === id ? { ...t, completed: selected } : t,
+                ),
+            );
+        } catch {
+            alert("Error updating todo!");
+        }
+    };
 
-  return (
-    <div className="group/todo flex w-full items-center justify-between border-b-[1px] border-veryDarkGrayishBlue bg-veryDarkDesaturatedBlue px-6 py-4">
-      <div className="flex flex-1 items-center gap-6">
-        <Checkbox
-          checkboxSelected={completed}
-          setCheckboxSelected={setCheckboxSelected}
-        />
-        <p
-          className={cn(
-            "text-veryLightGrayishBlue hover:text-veryLightGray",
-            completed &&
-              "text-veryDarkGrayishBlue line-through hover:text-veryDarkGrayishBlue",
-          )}
-        >
-          {title}
-        </p>
-      </div>
+    return (
+        <div className="group/todo flex w-full items-center justify-between border-b-[1px] border-veryDarkGrayishBlue bg-veryDarkDesaturatedBlue px-6 py-4">
+            <div className="flex flex-1 items-center gap-6">
+                <Checkbox
+                    checkboxSelected={completed}
+                    setCheckboxSelected={handleUpdateTodo}
+                />
+                <p
+                    className={cn(
+                        "text-veryLightGrayishBlue hover:text-veryLightGray",
+                        completed &&
+                            "text-veryDarkGrayishBlue line-through hover:text-veryDarkGrayishBlue",
+                    )}
+                >
+                    {title}
+                </p>
+            </div>
 
-      <button
-        className="text-lightGrayishBlueDark invisible p-2 transition-all duration-100 focus:outline-none group-hover/todo:visible"
-        onClick={() => handleRemoveTodo(id)}
-      >
-        <img src={IconCross} alt="Delete" />
-      </button>
-    </div>
-  );
+            <button
+                data-testid="delete-button"
+                className="text-lightGrayishBlueDark invisible p-2 transition-all duration-100 focus:outline-none group-hover/todo:visible"
+                onClick={() => handleDeleteTodo(id)}
+            >
+                <img src={IconCross} alt="Delete" />
+            </button>
+        </div>
+    );
 }
 
 export default Todo;

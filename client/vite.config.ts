@@ -1,14 +1,24 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: "/todo-app-with-reordering",
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"),
+    plugins: [react()],
+    base: "/todo-app-with-reordering",
+    resolve: {
+        alias: {
+            "@": path.resolve(__dirname, "src"),
+        },
     },
-  }
+    test: {
+        globals: true,
+        environment: "jsdom",
+        setupFiles: "./vitest.setup.ts",
+        coverage: {
+            provider: "istanbul",
+            reporter: ["text", "json", "html"],
+        },
+    },
 });
