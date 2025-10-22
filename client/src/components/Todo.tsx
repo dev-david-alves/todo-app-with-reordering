@@ -43,7 +43,7 @@ function Todo({
 
     return (
         <div className="group/todo flex w-full items-center justify-between border-b-[1px] border-veryDarkGrayishBlue bg-veryDarkDesaturatedBlue px-6 py-4">
-            <div className="flex flex-1 items-center gap-6">
+            <div className="flex flex-1 items-center gap-2">
                 <Checkbox
                     checkboxSelected={completed}
                     setCheckboxSelected={handleUpdateTodo}
@@ -52,7 +52,7 @@ function Todo({
                     className={cn(
                         "text-veryLightGrayishBlue hover:text-veryLightGray",
                         completed &&
-                            "text-veryDarkGrayishBlue line-through hover:text-veryDarkGrayishBlue",
+                            "text-sm text-veryDarkGrayishBlue line-through hover:text-veryDarkGrayishBlue",
                     )}
                 >
                     {title}
@@ -61,10 +61,14 @@ function Todo({
 
             <button
                 data-testid="delete-button"
-                className="text-lightGrayishBlueDark invisible p-2 transition-all duration-100 focus:outline-none group-hover/todo:visible"
+                className="text-lightGrayishBlueDark p-2 transition-all duration-100 focus:outline-none"
                 onClick={() => handleDeleteTodo(id)}
             >
-                <img src={IconCross} alt="Delete" />
+                <img
+                    src={IconCross}
+                    alt="Delete"
+                    className="size-3 transition-all duration-100"
+                />
             </button>
         </div>
     );
