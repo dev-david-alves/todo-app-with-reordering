@@ -25,7 +25,7 @@ describe("App Component - Unit Tests", () => {
         expect(document.body.classList.contains("dark")).toBe(true);
 
         // Input Component
-        const inputElement = screen.getByPlaceholderText(/new todo/i);
+        const inputElement = screen.getByPlaceholderText(/title here/i);
         expect(inputElement).toBeInTheDocument();
 
         // Todo Components

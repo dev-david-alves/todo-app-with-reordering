@@ -10,7 +10,7 @@ describe("Input Component - Unit Tests", () => {
 
         render(<Input setTodos={mockSetTodos} />);
 
-        const inputElement = screen.getByPlaceholderText(/new todo/i);
+        const inputElement = screen.getByPlaceholderText(/title here/i);
         expect(inputElement).toBeInTheDocument();
 
         const checkboxElement = screen.getByTestId("checkbox-button");
@@ -21,7 +21,7 @@ describe("Input Component - Unit Tests", () => {
         const mockSetTodos = vi.fn();
         render(<Input setTodos={mockSetTodos} />);
 
-        const inputElement = screen.getByPlaceholderText(/new todo/i);
+        const inputElement = screen.getByPlaceholderText(/title here/i);
         await userEvent.type(inputElement, "Test Todo");
 
         expect((inputElement as HTMLInputElement).value).toBe("Test Todo");
@@ -39,7 +39,7 @@ describe("Input Component - Integration Tests", () => {
         vi.spyOn(axios, "post").mockResolvedValue({ data: { id: 1 } });
         render(<Input setTodos={mockSetTodos} />);
 
-        const inputElement = screen.getByPlaceholderText(/new todo/i);
+        const inputElement = screen.getByPlaceholderText(/title here/i);
         await userEvent.type(inputElement, "Test Todo{Enter}");
         expect(axios.post).toHaveBeenCalledWith("http://localhost:3001/todos", {
             title: "Test Todo",
@@ -53,7 +53,7 @@ describe("Input Component - Integration Tests", () => {
         vi.spyOn(axios, "post").mockResolvedValue({ data: { id: 1 } });
         render(<Input setTodos={mockSetTodos} />);
 
-        const inputElement = screen.getByPlaceholderText(/new todo/i);
+        const inputElement = screen.getByPlaceholderText(/title here/i);
         await userEvent.type(inputElement, "{Enter}");
 
         expect(axios.post).not.toHaveBeenCalled();
